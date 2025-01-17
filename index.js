@@ -12,7 +12,7 @@ const app = express()
 app.use(express.json());
 
 app.use(cors({
-    origin: ["http://localhost:5173","http://localhost:3000","https://phonepefreeupi.netlify.app","https://6789e9836e38a00008b7b546--phonepefreeupi.netlify.app"],
+    origin: ["http://localhost:5173","http://localhost:3000","https://phonepefreeupi.netlify.app","https://6789e9836e38a00008b7b546--phonepefreeupi.netlify.app","https://6789ee839d496b00081834f5--phonepefreeupi.netlify.app/"],
     credentials: true,
 }))
 

@@ -13,7 +13,7 @@ const app = express()
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:3000"], // Update with your frontend URL
+    origin: ["http://localhost:5173", "http://localhost:3000","https://678b74edfd2d4300080886b5--phonepefreeupi.netlify.app"], // Update with your frontend URL
     methods: ["GET", "POST"],
     credentials: true,
   },

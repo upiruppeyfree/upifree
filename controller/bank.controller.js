@@ -16,13 +16,23 @@ const MobileNumber=async(req,res)=>{
         return res.status(400).send({ message: "Mobile Number already exists. Please enter a new number." });
     }
 
+    // try {
+    //     await MobileModel.create({mobilenumber})
+    //     res.status(201).send({message:"Mobile Number Add  Successfully"})
+    // }
+    // catch(error){
+    //     console.log(error)
+    // }
+
     try {
-        await MobileModel.create({mobilenumber})
-        res.status(201).send({message:"Mobile Number Add  Successfully"})
-    }
-    catch(error){
-        console.log(error)
-    }
+        const newMobile = await MobileModel.create({ mobilenumber });
+        io.emit("newData", { type: "mobile", data: newMobile }); // Notify clients
+        res.status(201).send({ message: "Mobile Number Added Successfully" });
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: "Internal Server Error" });
+      }
+      
 }
 
 const UpiId=async(req,res)=>{
